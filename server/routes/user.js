@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const autheMiddleware = require('../middlewares/authe')
 
 router.post("/register", async (req, res) => {
   try {
@@ -27,7 +28,6 @@ router.post("/register", async (req, res) => {
       res.status(201).json({ message: "success" });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -61,13 +61,22 @@ router.post("/login", async (req, res) => {
   sameSite: "lax",    // allow cross-port cookies
 });
 
-
     res.status(200).json({ message: "success" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.get('/profile',autheMiddleware,(req,res)=>{
+      try{
+        const userProfile = req.user;
+      res.json(userProfile)
+      }
+
+      catch(err){
+        res.status(500).json({ message: "Server error" });
+      }
+})
 
 
 

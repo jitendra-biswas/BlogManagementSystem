@@ -7,7 +7,7 @@ import BlogEditor from './pages/BlogEditor'
 import Dashboard from './pages/Dashboard'
 import Navbar from './components/Navbar'
 import Blogs from './pages/Blogs'
-import EditProfile from './pages/EditProfile'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/blogEditor' element={<BlogEditor />} />
       <Route path='/blogs' element={<Blogs />}/>
-      <Route path='/editProfile' element={<EditProfile />}/>
+      <Route path='/editProfile' element={<Profile />}/>
       
       
     </Routes>

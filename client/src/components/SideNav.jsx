@@ -17,7 +17,7 @@ const SideNav = () => {
 
           <h2 className="mt-30 px-3 mb-2 text-gray-600 font-semibold">Settings</h2>
         <Link to="/editProfile" className="w-full py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500">
-            <i className="ri-user-line"></i> Edit Profile
+            <i className="ri-user-line"></i> Profile
           </Link>
         </div>
 

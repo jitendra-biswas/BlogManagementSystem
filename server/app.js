@@ -19,7 +19,7 @@ connectionDB();
 
 app.use("/user", require("./routes/user"));
 app.use("/blog", require("./routes/blog"))
-app.use("/blogs", require("./routes/getData"))
+app.use("/", require("./routes/getData"))
 // app.use("/users", require("./routes/getData"))
 
 app.listen(3000, () => {

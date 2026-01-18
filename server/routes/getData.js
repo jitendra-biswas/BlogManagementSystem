@@ -3,7 +3,7 @@ const blogModel = require("../models/blog");
 
 const router = express.Router();
 
-router.get("/getblog", async (req,res)=>{
+router.get("/getblogs", async (req,res)=>{
    try{
      const blogData =  await blogModel.find();
      res.json(blogData);

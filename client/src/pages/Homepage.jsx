@@ -27,20 +27,8 @@ const Homepage = (props) => {
 //for getting blogs
     useEffect(() => {
        try{
-         axios.get("http://localhost:3000/blogs/getblog").then(res=>{
+         axios.get("http://localhost:3000/getblogs").then(res=>{
           setblogData(res.data)
-         })
-       }
-       catch(error){
-
-       }
-    }, [])
-
-    //for getting username
-    useEffect(() => {
-       try{
-         axios.get("http://localhost:3000/user/getUser").then(res=>{
-          setuser(res.data);
          })
        }
        catch(error){

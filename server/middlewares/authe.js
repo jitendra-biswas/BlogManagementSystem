@@ -10,9 +10,16 @@ function auth(req,res,next){
     }
 
     try{
-       const decode = jwt.verify(token,process.env.JWT_SECRET)
+       const decoded = jwt.verify(token,process.env.JWT_SECRET);
+       req.user = decoded;
+       return next();
     }
     catch(error){
-
+       return res.json({
+        message:'unauthorized'
+       })
     }
 }
+
+
+module.exports = auth;
