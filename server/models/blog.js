@@ -16,7 +16,8 @@ const blogData = new mongoose.Schema({
   image: {  // add this field for storing ImageKit URL
     type: String,
     default: null
-  }
+  },
+  
 });
 
 const blog = mongoose.model("blogData", blogData);

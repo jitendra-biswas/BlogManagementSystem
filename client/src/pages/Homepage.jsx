@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import BlogCard from "../components/blogCard";
 import { Link } from "react-router-dom";
 import RecentPostCard from "../components/RecentPostCard";
+import { useEffect } from "react";
+import axios from 'axios'
 
-const Homepage = () => {
+const Homepage = (props) => {
     const [active, setActive] = useState("All");
     const [category, setcategory] = useState("All")
+    const [blogData, setblogData] = useState([])
+    const [user, setuser] = useState([])
 
     const Buttons = [
       "All",
@@ -20,15 +24,42 @@ const Homepage = () => {
       setcategory(item);
     }
 
+//for getting blogs
+    useEffect(() => {
+       try{
+         axios.get("http://localhost:3000/blogs/getblog").then(res=>{
+          setblogData(res.data)
+         })
+       }
+       catch(error){
+
+       }
+    }, [])
+
+    //for getting username
+    useEffect(() => {
+       try{
+         axios.get("http://localhost:3000/user/getUser").then(res=>{
+          setuser(res.data);
+         })
+       }
+       catch(error){
+
+       }
+    }, [])
+    
+
   return (
     
     <>
     <div className="main w-full pt-20 px-18 flex">
       <div className="left w-[70%] min-h-screen border-r-2 border-zinc-500/10">
         <Link className=" border-b-2 border-gray-500 px-2 py-2 my-1">{category}</Link>
-        <BlogCard />
+        {blogData.map((blog,key)=>{
+          return <BlogCard key={key} title={blog.title} category = {blog.category} description={blog.description} image={blog.image}/>
+        })}
       </div>
-      <div className="right w-[30%] min-h-screen p-6">
+      <div className="right w-[30%] min-h-screen p-6 fixed right-10">
         <h2 className="font-semibold text-gray-700">Categories</h2>
         <div className="buttons mt-5 flex flex-wrap gap-3">
           {Buttons.map((item)=>{

@@ -22,9 +22,9 @@ const SignIn = () => {
   }
    function submitHandeler(e){
       e.preventDefault();
-      axios.post("http://localhost:3000/user/login",{email,password}).then(res=>{
+      axios.post("http://localhost:3000/user/login",{email,password},{ withCredentials: true }).then(res=>{
         if(res.data.message == "success"){
-          navigate("/");
+          navigate("/dashboard");
         }
       })
       .catch(err=>{

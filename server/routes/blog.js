@@ -32,12 +32,12 @@ router.post("/editor", upload.single("image"), async (req, res) => {
       imageUrl = result.url;
     }
 
-    const blog = await blogModel.create({
-      title: Title,
-      category: Category,
-      description: content,
-      image: imageUrl,
-    });
+  const blog = await blogModel.create({
+  title: Title,
+  category: Category,
+  description: content,
+  image: imageUrl,
+});
 
     res.status(201).json({ message: "success", blog });
   } catch (error) {

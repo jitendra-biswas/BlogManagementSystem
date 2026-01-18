@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
   try {
@@ -45,11 +46,29 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "error" });
     }
 
+    //Generate Token using JWT
+    const token =  jwt.sign({
+      userId : user._id,
+      email: user.email,
+      username: user.username
+    },
+    process.env.JWT_SECRET
+  )
+
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,     
+  sameSite: "lax",    // allow cross-port cookies
+});
+
+
     res.status(200).json({ message: "success" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
 
 module.exports = router

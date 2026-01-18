@@ -6,15 +6,13 @@ import SignIn from './components/SignIn'
 import BlogEditor from './pages/BlogEditor'
 import Dashboard from './pages/Dashboard'
 import Navbar from './components/Navbar'
-import DashboardNav from './components/DashboardNav'
 import Blogs from './pages/Blogs'
 import EditProfile from './pages/EditProfile'
 
 const App = () => {
-  const [isLogin, setisLogin] = useState(true);
   return (
     <>
-    {isLogin?<DashboardNav />:<Navbar /> }
+    <Navbar />
     <Routes>
       <Route path='/' element={<Homepage />}/>
       <Route path='/signin' element={<SignIn />} />
