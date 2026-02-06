@@ -1,25 +1,41 @@
 const mongoose = require("mongoose");
 
-const blogData = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  image: {  // add this field for storing ImageKit URL
-    type: String,
-    default: null
-  },
-  
-});
+const blogSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-const blog = mongoose.model("blogData", blogData);
+    subTitle: {
+      type: String,
+      required: false,
+      trim: true,
+    },
 
-module.exports = blog;
+    category: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    image: {
+      type: String,
+      default: null,
+    },
+
+    publishedAt: {
+      type: Date,
+      default: Date.now, // 👈 publish time
+    },
+  }
+);
+
+const Blog = mongoose.model("Blog", blogSchema);
+module.exports = Blog;

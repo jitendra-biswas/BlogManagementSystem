@@ -24,11 +24,13 @@ const SignIn = () => {
       e.preventDefault();
       axios.post("http://localhost:3000/user/login",{email,password},{ withCredentials: true }).then(res=>{
         if(res.data.message == "success"){
+          document.cookie = `success = ${res.data.success}`;
+          window.location.reload();
           navigate("/dashboard");
         }
       })
       .catch(err=>{
-        setmessage("Invalid email or password");
+        setmessage("Invalid email or password");  
       })
    }
 

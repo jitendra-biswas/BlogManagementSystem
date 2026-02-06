@@ -1,17 +1,17 @@
 import React from 'react'
-import SideNav from '../components/SideNav'
+import LoginedNav from '../components/LoginedNav'
 
-const Blogs = () => {
+const DashboardBlogs = () => {
   return (
     <>
       <div className='flex'>
-        <SideNav />
+        <LoginedNav />
     <div className='right w-[80%] min-h-screen pt-25 p-10'>
-      blog
+      Dashboard blogs
     </div>
       </div>
     </>
   )
 }
 
-export default Blogs
+export default DashboardBlogs

@@ -16,9 +16,9 @@ const imagekit = new ImageKit({
 // Fix route path here: remove repeated /blog
 router.post("/editor", upload.single("image"), async (req, res) => {
   try {
-    const { Title, Category, content } = req.body;
+    const { Title, SubTitle, Category, content } = req.body;
 
-    if (!Title || !Category || !content) {
+    if (!Title || !SubTitle || !Category || !content) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -34,6 +34,7 @@ router.post("/editor", upload.single("image"), async (req, res) => {
 
   const blog = await blogModel.create({
   title: Title,
+  subTitle : SubTitle,
   category: Category,
   description: content,
   image: imageUrl,
