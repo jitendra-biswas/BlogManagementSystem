@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const SignIn = () => {
+const Login = () => {
   const [PasswordVisible, setPasswordVisible] = useState(false);
   const [passwordType, setpasswordType] = useState("password");
   const [email, setemail] = useState("");
@@ -38,7 +38,7 @@ const SignIn = () => {
     <>
       <div className="login w-full h-screen flex items-center justify-center">
         <form onSubmit={submitHandeler} className="w-96 h-9/12 flex flex-col justify-center items-center gap-12">
-          <h1 className="text-4xl font-gelasio">Welcome Back</h1>
+          <h1 className="text-3xl mb-10 font-form font-extralight">Welcome Back</h1>
           <div className="inputs w-full px-8 flex flex-col gap-3 ">
             <div className="email relative bg-[#F0F0F0]  w-full flex items-center gap-1.5">
               <i className="ri-mail-line text-zinc-500 absolute ml-2"></i>
@@ -83,7 +83,7 @@ const SignIn = () => {
               Sign In
             </button>
             <div className="signWith">
-                <p>Dont't have an account? <Link to="/joinus" className="underline">Join us today</Link></p>
+                <p>Dont't have an account? <Link to="/register" className="underline">Join us today</Link></p>
                 <p className="text-center mt-3">{message}</p>
             </div>
         </form>
@@ -92,4 +92,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Login;

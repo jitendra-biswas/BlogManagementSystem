@@ -29,13 +29,12 @@ function profileCard() {
             onClick={showSideNav}
             className="ri-menu-line text-xl md:hidden max-md:visible cursor-pointer active:scale-90"
           ></i>
-          <div className="logo flex items-center">
+          <div className="logo flex items-center cursor-pointer" onClick={() => navigate("/")}>
             <img
               src={logo}
               alt="logo"
               loading="lazy"
-              className="w-8 cursor-pointer"
-              onClick={() => navigate("/")}
+              className="w-8 "
             />
             <h2 className="font-logo text-xl">
               Quillify

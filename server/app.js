@@ -17,10 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 // call function
 connectionDB();
 
-app.use("/user", require("./routes/user"));
-app.use("/blog", require("./routes/blog"))
-app.use("/", require("./routes/getData"))
-// app.use("/users", require("./routes/getData"))
+app.use("/api/auth", require("./routes/user.routes.js"));
+app.use("/blog", require("./routes/blog.routes.js"))
+app.use("/", require("./routes/getData.routes.js"))
+app.use("/",require("./routes/comment.routes.js"))
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

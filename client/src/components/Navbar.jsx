@@ -51,6 +51,12 @@ const Navbar = () => {
               >
                 Sign In
               </button>
+              <button
+                onClick={() => navigate("/register")}
+                className="bg-[#F0F0F0] transition-all text-gray-900 hover:bg-[#e5e5e9] hover:outline-1  px-5 py-1.5 pb-2 rounded-full text-sm font-medium cursor-pointer max-md:w-23 max-md:py-2 max-md:pb-2.5 active:scale-95"
+              >
+                Sign Up
+              </button>
 
             </div>
         

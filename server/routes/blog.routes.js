@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const ImageKit = require("imagekit");
-const blogModel = require("../models/blog");
+const blogModel = require("../model/blog.model");
 
 const router = express.Router();
 
