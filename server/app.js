@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 connectionDB();
 
 app.use("/api/auth", require("./routes/user.routes.js"));
+app.use("api/auth",require('./routes/user.routes.js'))
 app.use("/blog", require("./routes/blog.routes.js"))
 app.use("/", require("./routes/getData.routes.js"))
 app.use("/",require("./routes/comment.routes.js"))
