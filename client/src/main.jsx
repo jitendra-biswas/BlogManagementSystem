@@ -4,10 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import 'remixicon/fonts/remixicon.css'
 import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './Context/authContext.jsx'
 
 createRoot(document.getElementById('root')).render(
- 
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider> 
+      <App />
+    </AuthProvider>
+  </BrowserRouter>
 )

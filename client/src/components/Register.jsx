@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 const Register = () => {
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("")
   const [passwordType, setpasswordType] = useState("password");
-    const [PasswordVisible, setPasswordVisible] = useState(false);
+  const [PasswordVisible, setPasswordVisible] = useState(false);
 
    function showPassword() {
     setPasswordVisible(!PasswordVisible);
@@ -13,10 +17,27 @@ const Register = () => {
       setpasswordType("password");
     }
   }
+
+  function submitHandeler(e){
+     e.preventDefault()
+     axios.post("http://localhost:3000/api/auth/register",{username,email,password},{ withCredentials: true }).then(res=>{
+          if(res.data.message == "success"){
+            alert("User registered successfull");
+          }
+        })
+        .catch(err=>{
+          alert("Something went wrong!")
+        })
+
+        setUsername("")
+        setEmail("")
+        setPassword("")
+     }
+
   return (
      <>
           <div className="login w-full h-screen flex items-center justify-center">
-            <form  className="w-96 h-9/12 flex flex-col justify-center items-center gap-12">
+            <form onSubmit={submitHandeler} className="w-96 h-9/12 flex flex-col justify-center items-center gap-12">
               <h1 className="text-3xl mb-10 font-form font-extralight">Join Us Today</h1>
               <div className="inputs w-full px-8 flex flex-col gap-3 ">
                 <div className="username relative bg-[#F0F0F0]  w-full flex items-center gap-1.5">
@@ -25,6 +46,8 @@ const Register = () => {
                     type="username"
                     placeholder="username"
                     name="username"
+                    value={username}
+                    onChange={(e)=>{setUsername(e.target.value)}}
                     required
                     className="outline-none text-md w-full h-full px-3 py-2.5 pl-9 rounded"
                   />
@@ -35,6 +58,8 @@ const Register = () => {
                     type="email"
                     placeholder="Email"
                     name="email"
+                    value={email}
+                    onChange={(e)=>{setEmail(e.target.value)}}
                     required
                     className="outline-none text-md w-full h-full px-3 py-2.5 pl-9 rounded"
                   />
@@ -45,7 +70,8 @@ const Register = () => {
                     type={passwordType}
                     placeholder="password"
                     name="password"
-                    
+                    value={password}
+                    onChange={(e)=>{setPassword(e.target.value)}}
                     required
                     className="outline-none text-md w-full h-full px-3 py-2.5 pl-9 rounded pr-10"
                   />
@@ -71,7 +97,7 @@ const Register = () => {
             </form>
           </div>
         </>
-  )
-}
+  );
+};
 
 export default Register

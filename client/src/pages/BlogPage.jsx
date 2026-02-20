@@ -42,16 +42,7 @@ const BlogPage = (props) => {
       alert("Comment Success ✅")
   };
 
-  //Code for get Comment
-  useEffect(() => {
-     axios.get(`http://localhost:3000/getComment/${pageID}`).then((res)=>{
-       setComments(res.data.comments)
-     })
-  }, [])
-    
-
-  
-
+ 
   return data ? (
     <>
 

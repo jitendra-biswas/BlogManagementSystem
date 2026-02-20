@@ -58,12 +58,12 @@ const BlogEditor = () => {
   return (
     <>
     
-      <div className="flex">
+      <div className="flex w-full">
         <LoginedNav />
 
         <form
           onSubmit={formHandeler}
-          className="right w-[80%] min-h-screen pt-25 p-10"
+          className="right w-[70%] max-lg:w-[95%] max-md:w-[95vw] min-h-screen pt-25 p-10"
         >
           {/* Image upload */}
           <div className="thumbnail w-25 h-17 bg-zinc-100 outline-2 outline-gray-500/15 rounded overflow-hidden">
@@ -100,7 +100,7 @@ const BlogEditor = () => {
               placeholder="Type here"
               value={Title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-2xl h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
+              className="w-full h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
             />
           </div>
 
@@ -112,7 +112,7 @@ const BlogEditor = () => {
               placeholder="Type here"
               value={SubTitle}
               onChange={(e) => setSubTitle(e.target.value)}
-              className="w-2xl h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
+              className="w-full h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
             />
           </div>
 
@@ -123,7 +123,7 @@ const BlogEditor = () => {
               type="text"
               value={Category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-2xl h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
+              className="w-full h-12 px-3 text-gray-600 mt-2 bg-zinc-100 rounded"
             />
             <div className="buttons mt-5 flex flex-wrap gap-3">
               {Buttons.map((item) => (

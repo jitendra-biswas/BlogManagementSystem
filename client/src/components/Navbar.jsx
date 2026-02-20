@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileNav from "./profileNav";
 import logo from '../assets/logo.png'
+import Login from "./Login";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [SearchTerm, setSearchTerm] = useState("");
   const [profileCardVisible, setprofileCardVisible] = useState("hidden");
   const navigate = useNavigate();
@@ -44,9 +45,11 @@ const Navbar = () => {
           
             <div className="flex gap-3">
               <div className="flex items-center gap-2">
-
+               <button onClick={()=>navigate(`${props.loginSignal?"/dashboard/blogEditor":"/login"}`)} className="text-gray-500 px-5 py-1.5 pb-2 rounded-full text-md font-medium cursor-pointer max-md:hidden ">
+            <i className="ri-file-edit-line mr-1"></i>Write
+          </button>
               <button
-                onClick={() => navigate("/signin")}
+                onClick={() => navigate("/login")}
                 className="bg-gray-900 hover:bg-[#F0F0F0] hover:text-black hover:outline-1 transition-all text-white px-5 py-1.5 pb-2 rounded-full text-sm font-medium cursor-pointer max-md:w-23 max-md:py-2 max-md:pb-2.5 active:scale-95"
               >
                 Sign In

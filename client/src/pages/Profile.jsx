@@ -1,12 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 const Profile = () => {
     const navigate = useNavigate();
+    const [userEmail, setUserEmail] = useState()
+    const [userName, setUserName] = useState()
 
   useEffect(() => {
-      
-  }, [])
+         axios.get("http://localhost:3000/api/auth/getUsers",{withCredentials:true}).then(res=>{
+          setUserEmail(res.data.user.email);
+          setUserName(res.data.user.username)
+         })
+      }, [])
   
     
   return (
@@ -26,10 +33,10 @@ const Profile = () => {
                 alt=""
               />
             </div>
-        <p className='w-full text-xl text-zinc-700 font-semibold'>@admin</p>
-        <p className='w-full text-md text-zinc-700 -mt-2'>@admin223</p>
+        <p className='w-full text-xl text-zinc-700 font-semibold'>{"@"+userName}</p>
+        <p className='w-full text-md text-zinc-700 -mt-2'>{userEmail ? userEmail.slice(0,-10): ""}</p>
         <p className='text-zinc-500'>0 posts</p>
-        <button onClick={()=>navigate("/editProfile")} className='w-fit px-3 py-2 rounded bg-[#F0F0F0] mt-3 text-sm font-semibold text-zinc-700 active:scale-95 cursor-pointer hover:bg-zinc-200'>Edit Profile</button>
+        <button onClick={()=>navigate("/dashboard/editProfile")} className='w-fit px-3 py-2 rounded bg-[#F0F0F0] mt-3 text-sm font-semibold text-zinc-700 active:scale-95 cursor-pointer hover:bg-zinc-200'>Edit Profile</button>
         <p className='text-zinc-700'>Nothing to read here...</p>
 
 
