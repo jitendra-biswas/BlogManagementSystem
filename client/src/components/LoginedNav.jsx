@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileNav from "./profileNav";
 import logo from '../assets/logo.png'
+import axios from "axios";
 
 const LoginedNav = () => {
   const [sideNavVisiblility, setSideNavVisibility] = useState("hidden");
   const [profileCardVisible, setProfileCardVisible] = useState("hidden");
+  const [ProfileImage, setProfileImage] = useState("");
+  const [User, setUser] = useState("")
   const navigate = useNavigate();
+
+    useEffect(() => {
+        if (User) {
+          setProfileImage(User.profileImage)
+        }
+      }, [User]);
+  
+    useEffect(() => {
+           axios.get("http://localhost:3000/api/auth/getUsers",{withCredentials:true}).then(res=>{
+            setUser(res.data.user);
+           })
+        }, [])
+    
 
   // Toggle SideNav
   function showSideNav() {
@@ -49,7 +65,7 @@ const LoginedNav = () => {
 
           <div className="profile w-8 h-8 rounded-full overflow-hidden cursor-pointer" onClick={profileCard}>
             <img
-              src="https://images.unsplash.com/photo-1701615004837-40d8573b6652?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
+              src={ProfileImage ? ProfileImage : "https://plus.unsplash.com/premium_photo-1723677830933-4a9d84d17b4a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHx8"}
               className="w-full h-full object-cover object-center"
               alt=""
             />
@@ -98,13 +114,6 @@ const LoginedNav = () => {
             <i className="ri-user-line"></i> Edit Profile
           </Link>
 
-          <Link
-            to="/dashboard/changePassword"
-            onClick={handleLinkClick}
-            className="w-full py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
-          >
-            <i className="ri-lock-line"></i> Change Password
-          </Link>
         </div>
       </div>
     </>

@@ -4,6 +4,7 @@ const commentSchema = new mongoose.Schema(
   {
     pageID:{
       type: mongoose.Schema.Types.ObjectId,
+      ref:"blogs",
       trim:true
     },
     name: {

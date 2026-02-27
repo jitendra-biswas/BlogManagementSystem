@@ -13,6 +13,7 @@ import Navbar from './components/Navbar'
 import LoginedNav from "./components/LoginedNav";
 import { useContext } from "react";
 import { AuthContext } from "./Context/authContext";
+import UpdateBlog from "./pages/UpdateBlog";
 
 const App = (props) => {
   const { loginSignal } = useContext(AuthContext);
@@ -35,6 +36,7 @@ const App = (props) => {
           <Route path="dashboardblogs" element={<DashboardBlogs />} />
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="updateBlog/:id" element={<UpdateBlog />} />
         </Route>
       </Routes>
     </>

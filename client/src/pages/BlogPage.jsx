@@ -7,10 +7,8 @@ import moment from 'moment'
 const BlogPage = (props) => {
   const [data, setData] = useState(null);
   const { id } = useParams();
-  const pageID = id;
 
   //states for post comment
-  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   //states for comments
@@ -26,21 +24,52 @@ const BlogPage = (props) => {
     }
   };
 
+  // Fetch comments
+const getComments = async () => {
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/getComment/${id}`
+    );
+    setComments(res.data.comments);
+  } catch (error) {
+   console.log(err)
+  }
+};
+
   useEffect(() => {
-    if (id) getDataById();
+    if (id){
+       getDataById();
+       getComments();
+    }
   }, [id]);
 
 
   //Code for post comment
-    const submitHandeler = (e)=>{
-        e.preventDefault();
+    const submitHandeler = async (e) => {
+  e.preventDefault();
 
-      axios.post("http://localhost:3000/postComment", {pageID,name,description});
+  try {
 
-      setName("");
-      setDescription("")
-      alert("Comment Success ✅")
-  };
+    // wait until comment is saved in database
+   await axios.post(
+  `http://localhost:3000/postComment/${id}`,
+  { description },
+  { withCredentials: true }
+);
+
+    // clear input fields
+    setDescription("");
+
+    // refresh comments without reloading page
+    await getComments();
+
+  } catch (error) {
+    alert("Unauthorized access❗, Please Login First.")
+  }
+};
+
+  
+
 
  
   return data ? (
@@ -64,23 +93,24 @@ const BlogPage = (props) => {
           <h2 className="w-full font-semibold text-xl">Comments(2)</h2>
        
         
-         
-          {Comments=="" ? "No Comments..." : Comments.map((comment)=>{
-            return <Comment name={comment.name} description={comment.description}/>
-
-        })}
+         {
+          Comments.length === 0 ? "No Comments..." : 
+        Comments.map((comment) => (
+        <Comment
+          key={comment._id}
+          name = {comment.name}
+          description={comment.description}
+        />
+      ))
+}
+        
 
         </div>
 
         <div className="addComment w-[70%] max-md:w-[90%] mt-10">
            <h2 className="font-semibold text-xl">Add your comment</h2>
            <form className="w-full h-[50vh] flex flex-col gap-5 mt-5">
-            <input type="text"
-             placeholder="Name"
-              className="w-[40vw] max-lg:w-[60vw] max-md:w-[85vw] outline-2 outline-zinc-200 p-2 rounded"
-              value={name}
-              onChange={(e)=>{setName(e.target.value)}}
-              />
+
             <textarea 
             className="w-[40vw] max-lg:w-[60vw] max-md:w-[85vw] h-64 outline-2 outline-zinc-200 p-2 rounded" 
             placeholder="comment" 

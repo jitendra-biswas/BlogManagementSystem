@@ -2,71 +2,84 @@ import React, { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 import LoginedNav from "../components/LoginedNav";
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 
-const BlogEditor = () => {
+const UpdateBlog = () => {
   const [Image, setImage] = useState(null);
+  const [ThumbnailImage, setThumbnailImage] = useState(null);
   const [Title, setTitle] = useState("");
   const [SubTitle, setSubTitle] = useState("");
   const [Category, setCategory] = useState("Technology");
   const [active, setActive] = useState("Technology");
-  const Buttons = ["Technology", "Programming", "Social_Media", "Finance"];
+  const Buttons = ["Technology", "Programming", "Social Media", "Finance"];
   const editor = useRef(null);
   const [content, setContent] = useState("");
+  const {id} = useParams();
+  const navigate = useNavigate();
 
   const categoryHandeler = (item) => {
     setActive(item);
     setCategory(item);
   };
 
-  const formHandeler = async (e) => {
-    e.preventDefault();
-
-    if (!Title || !SubTitle || !Category || !content) {
-      toast.info("All field required!", { position: "top-center" });
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("Title", Title);
-    formData.append("SubTitle", SubTitle);
-    formData.append("Category", Category);
-    formData.append("content", content);
-    if (Image) formData.append("image", Image); // image key matches multer
-
+   const getDataById = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:3000/blog/editor",
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-
-      if (res.data.message === "success") {
-        setTitle("");
-        setSubTitle("");
-        setCategory("Technology");
-        setActive("Technology");
-        setContent("");
-        setImage(null);
-
-        toast.success("Blog posted successfully!", { position: "top-center" });
-      }
-    } catch (err) {
-      toast.error("Something went wrong!", { position: "top-center" });
+      const res = await axios.get(`http://localhost:3000/getBlogsById/${id}`);
+      setTitle(res.data.title)
+      setSubTitle(res.data.subTitle);
+      setCategory(res.data.category);
+      setContent(res.data.description)
+      setThumbnailImage(res.data.image)
+    } catch (error) {
+      console.error(error);
     }
   };
 
+ const updateBlog = async (e, id) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("title", Title);
+  formData.append("subTitle", SubTitle);
+  formData.append("category", Category);
+  formData.append("content", content);
+
+  if (Image) {
+    formData.append("image", Image);
+  }
+
+  try {
+    const res = await axios.put(
+      `http://localhost:3000/blog/updateBlogs/${id}`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+    navigate('/')
+    toast.success("Blog Updated Successfully!",{position:"top-center"})
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    toast.error("Something went wrong",{position:"top-center"});
+  }
+};
+
+  useEffect(() => {
+      if (id){
+         getDataById();
+      }
+    }, [id]);
+   
+
   return (
     <>
+    
       <div className="flex w-full">
         <LoginedNav />
+
         <form
-          onSubmit={formHandeler}
+        onSubmit={(e) => updateBlog(e, id)}
           className="right w-[70%] max-lg:w-[95%] max-md:w-[95vw] min-h-screen pt-25 p-10"
         >
           {/* Image upload */}
@@ -75,7 +88,7 @@ const BlogEditor = () => {
               htmlFor="file"
               className="w-full h-full flex flex-col justify-center items-center cursor-pointer"
             >
-              <div className={`${!Image ? "visible" : "hidden"}`}>
+              <div className={`${!ThumbnailImage ? "visible" : "hidden"}`}>
                 <i className="ri-upload-2-line text-4xl text-gray-400"></i>
                 <p className="text-sm text-gray-500">Upload</p>
               </div>
@@ -86,13 +99,12 @@ const BlogEditor = () => {
                 className="hidden"
               />
 
-              {Image && (
+              
                 <img
-                  src={URL.createObjectURL(Image)}
+                  src={Image? URL.createObjectURL(Image) : ThumbnailImage}
                   alt=""
                   className="w-full h-full visible"
                 />
-              )}
             </label>
           </div>
 
@@ -160,7 +172,7 @@ const BlogEditor = () => {
             type="submit"
             className="mt-5 bg-black hover:bg-zinc-800 px-3.5 py-1.5 rounded text-white font-md cursor-pointer active:scale-95"
           >
-            Post Blog
+            Update Blog
           </button>
         </form>
       </div>
@@ -168,4 +180,4 @@ const BlogEditor = () => {
   );
 };
 
-export default BlogEditor;
+export default UpdateBlog;

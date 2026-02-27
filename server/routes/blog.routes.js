@@ -8,5 +8,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // Fix route path here: remove repeated /blog
 router.post("/editor", upload.single("image"),editorController.editor) 
-
+router.put("/updateBlogs/:id", upload.single("image"),editorController.updateBlogs); 
+ router.delete("/deleteBlog/:id",editorController.deleteBlog)
 module.exports = router;

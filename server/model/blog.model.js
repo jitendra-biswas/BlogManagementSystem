@@ -30,6 +30,12 @@ const blogSchema = new mongoose.Schema(
       default: null,
     },
 
+    userId :{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"users",
+      trim:true
+    },
+
     publishedAt: {
       type: Date,
       default: Date.now, // 👈 publish time

@@ -35,12 +35,7 @@ const SideNav = () => {
           >
             <i className="ri-user-line"></i> Edit Profile
           </Link>
-          <Link
-            to="/dashboard/editProfile"
-            className="w-60 py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
-          >
-            <i className="ri-lock-line"></i> Change Password
-          </Link>
+
         </div>
       </div>
 

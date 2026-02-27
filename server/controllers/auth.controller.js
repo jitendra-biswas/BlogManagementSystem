@@ -21,7 +21,8 @@ async function registerUser(req,res){
    const user = await userModel.create({
     username,
     email,
-    password:hashedPassword
+    password:hashedPassword,
+    handle: "@"+ username
    })
 
 

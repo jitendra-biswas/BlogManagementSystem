@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [username, setUsername] = useState("")
@@ -22,11 +23,11 @@ const Register = () => {
      e.preventDefault()
      axios.post("http://localhost:3000/api/auth/register",{username,email,password},{ withCredentials: true }).then(res=>{
           if(res.data.message == "success"){
-            alert("User registered successfull");
+            toast.success("User registered successfull",{position:"top-center"});
           }
         })
         .catch(err=>{
-          alert("Something went wrong!")
+          toast.error("Something went wrong!",{position:"top-center"})
         })
 
         setUsername("")

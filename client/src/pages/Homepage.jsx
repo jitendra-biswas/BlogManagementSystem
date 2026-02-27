@@ -47,7 +47,9 @@ const Homepage = (props) => {
              })}
           </div>
 
-      {blogData
+      {blogData.length == 0 ? 
+      <div className="bg-gray-200 w-fit px-20 py-3 rounded-full text-xl ml-20 mt-5">No Blogs Yet ...</div>
+       : blogData
     .filter((blog) => category === "All" || blog.category === category)
     .map((blog, key) => (
       <BlogCard
