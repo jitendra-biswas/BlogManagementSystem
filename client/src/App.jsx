@@ -14,9 +14,7 @@ import LoginedNav from "./components/LoginedNav";
 import { useContext } from "react";
 import { AuthContext } from "./Context/authContext";
 import UpdateBlog from "./pages/UpdateBlog";
-import AdminPage from "./pages/AdminPage";
 import Comments from "./pages/Comments";
-import AdminLogin from "./components/AdminLogin";
 
 const App = (props) => {
   const { loginSignal } = useContext(AuthContext);
@@ -29,8 +27,6 @@ const App = (props) => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blogs/:id" element={<BlogPage />} />
-        <Route path="/admin" element={<AdminLogin />}  />
-        <Route path="/adminPage" element={<AdminPage />}  />
 
         <Route
           path="/dashboard"
