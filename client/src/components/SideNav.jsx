@@ -14,17 +14,24 @@ const SideNav = () => {
             <i className="ri-speed-up-line"></i> Dashboard
           </Link>
           <Link
-            to="/dashboard/dashboardblogs"
-            className="w-60 py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
-          >
-            <i className="ri-file-pdf-2-line"></i> Blogs
-          </Link>
-          <Link
             to="/dashboard/blogEditor"
             className="w-60 py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
           >
             <i className="ri-file-edit-line mr-1"></i> Write
           </Link>
+          <Link
+            to="/dashboard/dashboardblogs"
+            className="w-60 py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
+          >
+            <i className="ri-file-pdf-2-line"></i> Blog lists
+          </Link>
+          <Link
+            to="/dashboard/comments"
+            className="w-60 py-3 px-2 text-gray-500 hover:bg-[#F0F0F0] rounded-l hover:border-r-2 hover:border-r-zinc-500"
+          >
+            <i className="ri-message-2-line"></i> Comments
+          </Link>
+          
 
           <h2 className="mt-30 px-3 mb-2 text-gray-600 font-semibold">
             Settings

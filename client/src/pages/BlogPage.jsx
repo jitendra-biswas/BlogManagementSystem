@@ -3,6 +3,7 @@ import Comment from "../components/Comment";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment'
+import { toast } from "react-toastify";
 
 const BlogPage = (props) => {
   const [data, setData] = useState(null);
@@ -47,6 +48,8 @@ const getComments = async () => {
   //Code for post comment
     const submitHandeler = async (e) => {
   e.preventDefault();
+    toast.success("Comment successfully, wait to approved",{position:"top-center"})
+  
 
   try {
 

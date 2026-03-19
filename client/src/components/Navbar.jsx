@@ -24,21 +24,11 @@ const Navbar = (props) => {
               className="w-8 cursor-pointer"
               onClick={() => navigate("/")}
             />
-            <h2 className="md:hidden max-md:visible font-logo text-xl">
+            <h2 className="font-logo text-xl">
               Quillify
             </h2>
           </div>
 
-          <div className=" relative max-md:hidden">
-            <i className="ri-search-line text-gray-500 absolute left-3 mt-2 "></i>
-            <input
-              type="text"
-              placeholder="Search"
-              value={SearchTerm}
-              onChange={(e)=>setSearchTerm(e.target.value)}
-              className={`outline-none bg-[#F0F0F0]  h-10 rounded-full px-2 pl-10  `}
-            />
-          </div>
         </div>
 
         <div className="right flex">
