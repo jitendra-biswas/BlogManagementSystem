@@ -2,23 +2,36 @@ const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema(
   {
-    pageID:{
+    pageID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"blogs",
-      trim:true
+      ref: "Blog",
+      required: true,
+      trim: true,
+    },
+    userId: {  // ✅ new field: who wrote the comment
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      trim: true,
     },
     name: {
       type: String,
       required: true,
       trim: true,
     },
-
     description: {
       type: String,
       required: false,
       trim: true,
     },
-
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+  },
+  {
+    timestamps: true,
   }
 );
 
