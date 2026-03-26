@@ -165,7 +165,8 @@ const Comments = () => {
 
                         <i
                           className="ri-delete-bin-5-line cursor-pointer text-red-600 hover:text-red-800"
-                          onClick={() => deleteComment(c._id)}
+                          onClick={() => confirm("Do you want to delete comment?")? deleteComment(c._id):""}
+                          
                         ></i>
                       </div>
                     </td>

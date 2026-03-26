@@ -13,53 +13,62 @@ const BlogEditor = () => {
   const Buttons = ["Technology", "Programming", "Social_Media", "Finance"];
   const editor = useRef(null);
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const categoryHandeler = (item) => {
     setActive(item);
     setCategory(item);
   };
 
-  const formHandeler = async (e) => {
-    e.preventDefault();
+ const formHandeler = async (e) => {
+  e.preventDefault();
 
-    if (!Title || !SubTitle || !Category || !content) {
-      toast.info("All field required!", { position: "top-center" });
-      return;
-    }
+  if (!Title || !SubTitle || !Category || !content) {
+    toast.info("All field required!", { position: "top-center" });
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append("Title", Title);
-    formData.append("SubTitle", SubTitle);
-    formData.append("Category", Category);
-    formData.append("content", content);
-    if (Image) formData.append("image", Image); // image key matches multer
+  const formData = new FormData();
+  formData.append("Title", Title);
+  formData.append("SubTitle", SubTitle);
+  formData.append("Category", Category);
+  formData.append("content", content);
+  if (Image) formData.append("image", Image);
 
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/blog/editor",
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+  try {
+    setLoading(true); // 🔥 start loading
+
+    const res = await axios.post(
+      "http://localhost:3000/blog/editor",
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-      );
-
-      if (res.data.message === "success") {
-        setTitle("");
-        setSubTitle("");
-        setCategory("Technology");
-        setActive("Technology");
-        setContent("");
-        setImage(null);
-
-        toast.success("Blog posted successfully!", { position: "top-center" });
       }
-    } catch (err) {
-      toast.error("Something went wrong!", { position: "top-center" });
+    );
+
+    if (res.data.message === "success") {
+      setTitle("");
+      setSubTitle("");
+      setCategory("Technology");
+      setActive("Technology");
+      setContent("");
+      setImage(null);
+
+      toast.success("Blog posted successfully!", {
+        position: "top-center",
+      });
     }
-  };
+  } catch (err) {
+    toast.error("Something went wrong!", {
+      position: "top-center",
+    });
+  } finally {
+    setLoading(false); // 🔥 stop loading
+  }
+};
 
   return (
     <>
@@ -156,12 +165,15 @@ const BlogEditor = () => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="mt-5 bg-black hover:bg-zinc-800 px-3.5 py-1.5 rounded text-white font-md cursor-pointer active:scale-95"
-          >
-            Post Blog
-          </button>
+         <button
+  type="submit"
+  disabled={loading}
+  className={`mt-5 px-3.5 py-1.5 rounded text-white font-md cursor-pointer active:scale-95 ${
+    loading ? "bg-gray-500 cursor-not-allowed" : "bg-black hover:bg-zinc-800"
+  }`}
+>
+  {loading ? "Posting..." : "Post Blog"}
+</button>
         </form>
       </div>
     </>

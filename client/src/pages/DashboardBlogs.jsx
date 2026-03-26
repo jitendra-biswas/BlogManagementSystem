@@ -92,7 +92,7 @@ async function deleteBlog(id) {
 
               <i
                 className="ri-delete-bin-5-line text-xl text-red-500 cursor-pointer"
-                 onClick={() => deleteBlog(blog._id)}
+                 onClick={() => confirm("Do you want to delete blog ?")?deleteBlog(blog._id):""}
               ></i>
             </div>
           </td>
