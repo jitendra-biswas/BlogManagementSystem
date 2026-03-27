@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
   bio: {
     type: String,
     trim: true
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
   }
 });
 

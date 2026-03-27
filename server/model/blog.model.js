@@ -32,8 +32,14 @@ const blogSchema = new mongoose.Schema(
 
     userId :{
       type: mongoose.Schema.Types.ObjectId,
-      ref:"users",
+      ref:"user",
       trim:true
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending"
     },
 
     publishedAt: {

@@ -11,7 +11,13 @@
 
 input:focus{
   outline: 1.7px solid rgb(186, 176, 203);
-  
+}
+
+button,
+a,
+[role="button"],
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .font-logo{

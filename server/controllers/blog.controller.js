@@ -5,7 +5,8 @@ const multer = require('multer')
 
 async function getblogs(req, res) {
   try {
-    const blogs = await blogModel.find();
+    // Public blog list only shows approved blogs.
+    const blogs = await blogModel.find({ status: "approved" });
 
     res.json({ blogs });
   } catch (error) {
@@ -49,10 +50,31 @@ async function getBlogsById(req, res) {
   try {
     const { id } = req.params;
 
-    const blog = await blogModel.findById(id);
+    const token = req.cookies.token;
+    let user = null;
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        user = await userModel.findOne({ email: decoded.email });
+      } catch (e) {
+        user = null;
+      }
+    }
 
+    const blog = await blogModel.findById(id);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
+    }
+
+    if (blog.status !== "approved") {
+      if (!user) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+
+      const isOwner = user._id.toString() === blog.userId?.toString();
+      if (!isOwner && !user.isAdmin) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
     }
 
     res.json(blog);

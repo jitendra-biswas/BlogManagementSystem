@@ -36,12 +36,32 @@ async function registerUser(req,res){
 async function login(req,res){
    const {email,password} = req.body
 
-   const user =await userModel.findOne({email});
+   let user = await userModel.findOne({email});
+
+   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@admin.com";
+   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+   const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+
+   // If not found in DB, but matches default admin from env, create/fetch admin user.
    if(!user){
-    return res.status(401).json({message:"Invalid username or password"});
+     if(email === ADMIN_EMAIL && password === ADMIN_PASSWORD){
+       const hashedDefault = await bcrypt.hash(ADMIN_PASSWORD, 10);
+       user = await userModel.findOne({email: ADMIN_EMAIL});
+       if(!user){
+         user = await userModel.create({
+          username: ADMIN_USERNAME,
+          email: ADMIN_EMAIL,
+          password: hashedDefault,
+          handle: "@" + ADMIN_USERNAME,
+          isAdmin: true
+         });
+       }
+     } else {
+       return res.status(401).json({message:"Invalid username or password"});
+     }
    }
 
-   const isValidPassword =await bcrypt.compare(password,user.password);
+   const isValidPassword = await bcrypt.compare(password,user.password);
    if(!isValidPassword){
     return res.status(401).json({message:"Invalid username or password"});
    }
@@ -51,11 +71,10 @@ async function login(req,res){
    },process.env.JWT_SECRET)
 
    res.cookie("token", token, {
-  httpOnly: true,
-  maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie valid for 7 days
-  sameSite: "lax"
-});
-
+     httpOnly: true,
+     maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie valid for 7 days
+     sameSite: "lax"
+   });
 
    res.status(201).json({message:"success"})
 }
@@ -89,9 +108,10 @@ async function checkToken(req,res){
    if(!token){
       return res.status(401).json({message:"Token is not available"})
    }
-   jwt.verify(token,process.env.JWT_SECRET);
+   const decoded = jwt.verify(token,process.env.JWT_SECRET);
+   const user = await userModel.findOne({email:decoded.email});
    
-   res.status(201).json({message:"success"});
+   res.status(201).json({message:"success", isAdmin: user?.isAdmin || false});
 }
 
 module.exports = {registerUser,login,checkToken,signOut,getUsers}

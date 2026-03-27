@@ -1,5 +1,5 @@
 import Homepage from "./pages/Homepage";
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import BlogEditor from "./pages/BlogEditor";
 import DashboardLayout from "./pages/DashboardLayout";
 import DashboardBlogs from "./pages/DashboardBlogs";
@@ -15,18 +15,24 @@ import { useContext } from "react";
 import { AuthContext } from "./Context/authContext";
 import UpdateBlog from "./pages/UpdateBlog";
 import Comments from "./pages/Comments";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const App = (props) => {
-  const { loginSignal } = useContext(AuthContext);
+  const { loginSignal, isAdmin } = useContext(AuthContext);
+  const location = useLocation();
+  const isAdminRoute = location.pathname === "/admin" || location.pathname === "/admin-dashboard";
 
   return (
     <>
-      {loginSignal ? <LoginedNav /> : <Navbar loginSignal={loginSignal}/>}
+      {!isAdminRoute && (loginSignal ? <LoginedNav /> : <Navbar loginSignal={loginSignal}/>)}
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blogs/:id" element={<BlogPage />} />
+        <Route path="/admin" element={<AdminLoginPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
         <Route
           path="/dashboard"

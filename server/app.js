@@ -35,8 +35,14 @@ app.use(express.urlencoded({ extended: true }));
         email: ADMIN_EMAIL,
         password: hashed,
         handle: "@" + ADMIN_USERNAME,
+        isAdmin: true
       });
       console.log("Default admin user created:", ADMIN_EMAIL);
+    } else if (!existing.isAdmin) {
+      // Update existing user to be admin if not already
+      existing.isAdmin = true;
+      await existing.save();
+      console.log("Updated existing user to admin:", ADMIN_EMAIL);
     } else {
       console.log("Default admin already exists:", ADMIN_EMAIL);
     }
@@ -46,6 +52,7 @@ app.use(express.urlencoded({ extended: true }));
 
   app.use("/api/auth", require("./routes/user.routes.js"));
 app.use("/api/auth",require('./routes/UpdateProfile.routes.js'))
+app.use("/api/admin", require("./routes/admin.routes.js"))
 app.use("/blog", require("./routes/blog.routes.js"))
 app.use("/", require("./routes/getData.routes.js"))
 app.use("/",require("./routes/comment.routes.js"))

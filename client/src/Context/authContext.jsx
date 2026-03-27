@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loginSignal, setLoginSignal] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const checkAuth = async () => {
     try {
@@ -13,8 +14,10 @@ export const AuthProvider = ({ children }) => {
         { withCredentials: true }
       );
       setLoginSignal(res.data.message === "success");
+      setIsAdmin(res.data.isAdmin || false);
     } catch {
       setLoginSignal(false);
+      setIsAdmin(false);
     }
   };
 
@@ -23,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loginSignal, checkAuth }}>
+    <AuthContext.Provider value={{ loginSignal, checkAuth, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
